@@ -578,6 +578,15 @@ IA_ERRORCODE impeghd_write_oam_meta_data_for_ext_ren(
   impeghd_write_bits_buf(pstr_bit_buf, pstr_oam_dec_state->num_objects, 9);
   for (WORD32 obj = 0; obj < pstr_oam_dec_state->num_objects; obj++)
   {
+    WORD32 initial_idx = obj;
+    FLOAT32 initial_azimuth = pstr_oam_dec_state->azimuth_descaled[initial_idx];
+    FLOAT32 initial_elevation = pstr_oam_dec_state->elevation_descaled[initial_idx];
+    FLOAT32 initial_radius = pstr_oam_dec_state->radius_descaled[initial_idx];
+    FLOAT32 initial_gain = pstr_oam_dec_state->gain_descaled[initial_idx];
+
+    printf("[ExtRen] Object %d initial position: azimuth=%.2f deg, elevation=%.2f deg, radius=%.3f m, gain=%.3f\n",
+           obj, initial_azimuth, initial_elevation, initial_radius, initial_gain);
+
     impeghd_write_bits_buf(pstr_bit_buf, impeghd_get_goa_ele_id(pstr_mae_asi, grp, obj, mae_ele_id_offset), 9); /*goa_element_id[obj]*/
     impeghd_write_bits_buf(pstr_bit_buf, pstr_oam_cfg->dyn_obj_priority_present, 1);
     impeghd_write_bits_buf(pstr_bit_buf, pstr_oam_cfg->uniform_spread_present, 1);

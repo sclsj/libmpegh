@@ -33,6 +33,7 @@
 */
 
 #include <math.h>
+#include <stdio.h>
 #include <string.h>
 
 #include <impeghd_type_def.h>
@@ -496,6 +497,12 @@ impegh_obj_ren_vbap_process(ia_obj_ren_dec_state_struct *ptr_obj_ren_dec_state, 
   ia_oam_dec_state_struct *ptr_obj_md_dec_state = &ptr_obj_ren_dec_state->str_obj_md_dec_state;
   if (ptr_obj_ren_dec_state->first_frame_flag[obj_idx])
   {
+    printf("[Renderer] Object %d initial position: azimuth=%.2f deg, elevation=%.2f deg, radius=%.3f m, gain=%.3f\n",
+           obj_idx,
+           ptr_obj_ren_dec_state->str_obj_md_dec_state.azimuth_descaled[obj_idx],
+           ptr_obj_ren_dec_state->str_obj_md_dec_state.elevation_descaled[obj_idx],
+           ptr_obj_ren_dec_state->str_obj_md_dec_state.radius_descaled[obj_idx], gain_fac);
+
     vec_p.phi =
         (FLOAT32)(ptr_obj_ren_dec_state->str_obj_md_dec_state.elevation_descaled[obj_idx]);
     vec_p.theta =
